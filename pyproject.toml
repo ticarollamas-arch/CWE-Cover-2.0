@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cyber-hunter-engine"
+version = "2.0.0"
+authors = [
+  { name = "Carol Lamas (CyberHuntLab)", email = "contato@cyberhuntlab.com.br" },
+]
+description = "Autonomous Integrated Defensive Security Suite & 17 Native Engines"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.scripts]
+chl = "cyber_hunter:main"
+cyber-hunter = "cyber_hunter:main"

@@ -1,0 +1,37 @@
+{
+  "project": "CWE-Cover 2.0",
+  "version": "2.0.0",
+  "author": "Carol Lamas (CyberHuntLab)",
+  "ollama": {
+    "enabled": false,
+    "endpoint": "http://localhost:11434/api/generate",
+    "tags_endpoint": "http://localhost:11434/api/tags",
+    "model": "llama3:latest",
+    "fallback_model": "mistral:latest",
+    "temperature": 0.2,
+    "system_prompt": "You are a specialized AppSec report assistant for CWE-Cover 2.0. STRICT EVIDENCE-FIRST RULE: Never invent, guess, or modify URLs, headers, endpoints, payloads, or severity scores. Base all analysis exclusively on the empirical findings supplied."
+  },
+  "crewai": {
+    "enabled": false,
+    "provider": "gemini",
+    "model": "gemini-1.5-flash",
+    "api_key_env_var": "GEMINI_API_KEY",
+    "agents": [
+      {
+        "name": "Recon Analyst",
+        "role": "Attack Surface & Scope Specialist",
+        "goal": "Structure passive reconnaissance data strictly within authorized boundaries"
+      },
+      {
+        "name": "Report Writer",
+        "role": "Bug Bounty & AppSec Technical Writer",
+        "goal": "Draft structured vulnerability advisory reports for HackerOne and Bugcrowd platforms without hallucinatory claims"
+      }
+    ]
+  },
+  "validation_rules": {
+    "require_reproducible_evidence": true,
+    "suppress_generic_server_banners_as_critical": true,
+    "distinguish_hypothesis_from_confirmed": true
+  }
+}

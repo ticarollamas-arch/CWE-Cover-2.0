@@ -1,0 +1,18 @@
+{
+  "target": "https://alvo-autorizado.example",
+  "allowed_domains": [
+    "alvo-autorizado.example",
+    "api.alvo-autorizado.example"
+  ],
+  "authorization": true,
+  "allowed_methods": [
+    "GET"
+  ],
+  "rate_limit_per_sec": 1.0,
+  "exclusions": [
+    "https://alvo-autorizado.example/logout",
+    "https://alvo-autorizado.example/admin/delete"
+  ],
+  "platform": "hackerone",
+  "program": "example-bug-bounty-program"
+}

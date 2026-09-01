@@ -1,0 +1,8 @@
+{
+  "name": "Cyber Hunter Lab",
+  "description": "Segurança mais acessível para quem está começando. Plataforma criada para ajudar novos pesquisadores de segurança a aprender, organizar e executar avaliações autorizadas com mais praticidade.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

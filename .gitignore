@@ -1,0 +1,89 @@
+# ==============================================================================
+# CYBER HUNTER LAB — REGRAS DE EXCLUSÃO GIT (.gitignore)
+# ==============================================================================
+
+# 1. Armazenamento Local e Dados de Runtime (Imutáveis / Sessões / Licenças / Audit)
+.cyber_hunter_data/
+*.db
+*.sqlite
+*.sqlite3
+
+# 2. Variáveis de Ambiente e Segredos
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+
+# 3. Credenciais e Tokens de Terceiros
+credentials.json
+gdrive_token.json
+client_secrets.json
+service_account.json
+token.json
+oauth_token.json
+
+# 4. Relatórios Gerados e Evidências Locais
+reports/
+*.pcap
+*.har
+*.log
+
+# 5. Dependências e Ambientes Virtuais (Node.js & Python)
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 6. Arquivos compactados e Dumps
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.bak
+*.swp
+*.swo
+*.tmp
+*.DS_Store
+Thumbs.db
+
+# 7. IDEs e Editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.cursor/

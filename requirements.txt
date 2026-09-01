@@ -1,0 +1,5 @@
+# Cyber Hunter Engine (CHE) • Native Python Infrastructure
+# Nota: O Cyber Hunter Engine NÃO utiliza scanners externos (Nmap, Nuclei, Katana, etc.)
+# Todas as capacidades são implementadas nativamente utilizando os módulos padrão e drivers autorais.
+
+# Bibliotecas de runtime padrão Python 3.9+ (Zero external scanner runtime)

@@ -1,0 +1,6 @@
+{
+  "name": "cwe-discover — Recon & Bug Bounty Suite",
+  "description": "Suite oficial cwe-discover por Carol Lamas (CyberHuntLab). Reconhecimento web passivo, priorização determinística por MITRE CWE, relatórios para HackerOne/Bugcrowd e agentes CrewAI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
