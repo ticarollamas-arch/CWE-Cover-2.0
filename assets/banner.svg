@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="CWE-Cover 2.0">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/><stop offset="1" stop-color="#111C33"/>
+    </linearGradient>
+    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#1E293B" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
+  <rect width="1200" height="300" rx="18" fill="url(#grid)" opacity="0.55"/>
+  <rect x="0" y="292" width="1200" height="8" fill="url(#ac)"/>
+  <g transform="translate(70 82)">
+    <path d="M68 0 127 34v68L68 136 9 102V34Z" fill="#0B1220" stroke="url(#ac)" stroke-width="6"/>
+    <path d="M44 52l22 16-22 16" fill="none" stroke="#22D3EE" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M72 88h22" stroke="#8B5CF6" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="240" y="138" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="50" font-weight="700" fill="#E6EDF7">CWE-Cover 2.0</text>
+  <text x="240" y="184" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="24" fill="#94A3B8">Recon, mapeamento CWE e pacote de evidências para bug bounty</text>
+  <text x="240" y="232" font-family="JetBrains Mono, Consolas, monospace" font-size="18" fill="#22D3EE">python · react · express · cwe · owasp</text>
+  <text x="1130" y="268" text-anchor="end" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="16" fill="#64748B">Ana Caroline Lamas · cyberhuntlab.com.br</text>
+</svg>

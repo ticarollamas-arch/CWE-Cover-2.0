@@ -1,125 +1,77 @@
-# 🛡️ CWE-Cover 2.0 • CyberHuntLab
-**Suite Profissional de Triagem, Reconhecimento Passivo, Mapeamento MITRE CWE & Pacote de Evidências**
+<p align="center"><img src="assets/banner.svg" alt="CWE-Cover 2.0 — recon, mapeamento CWE e pacote de evidências para bug bounty" width="100%"></p>
 
-- **Website:** https://cyberhuntlab.com.br/
+# CWE-Cover 2.0 — triagem de segurança, mapeamento CWE e pacote de evidências
 
----
+Suíte de **segurança defensiva e bug bounty** da CyberHuntLab. O núcleo é uma CLI em **Python** (`cwe_discover.py`) que exige **autorização explícita** e, opcionalmente, um arquivo de **escopo**. Ela faz reconhecimento, aplica regras declarativas, classifica os achados por **MITRE CWE** e passa cada um por **agentes** de mapeamento, falso positivo e impacto antes de gerar o relatório e um **pacote ZIP de evidências**. O repositório inclui também o **Cyber Hunter Engine** (17 motores nativos, sem scanners externos) e um **painel web** (React + Express) com campanhas, licenças e administração.
 
-## 🏛️ Arquitetura Modular da Suite
+## Recursos
 
-```text
-CWE-Cover-2.0
-│
-├── Subfinder/OSINT
-├── httpx/probing
-├── Katana/crawling
-├── Aquatone/screenshots + relatório visual
-├── Nuclei/rules
-├── CWE matcher
-├── Evidence Collector
-├── Validation Agent (PoC Explainer)
-└── Report Engine
-       ├── JSON
-       ├── Markdown
-       ├── HTML
-       └── screenshots/
-```
+### CLI `cwe_discover.py`
 
-### ⚙️ Integração com Ferramentas Externas na VPS
-As ferramentas externas permanecem instaladas separadamente no sistema operacional / VPS. O CWE-Cover 2.0 verifica dinamicamente via `shutil.which` (`command -v ferramenta`) e utiliza a ferramenta disponível automaticamente:
-- Se instalada (ex: `aquatone`, `subfinder`, `httpx`, `katana`, `nuclei`): Executa e agrega evidências.
-- Se não disponível: Registra `Tool: NOT AVAILABLE (ignorando etapa visual externa)` e prossegue sem interromper a execução.
+- **Autorização obrigatória** (`--i-have-authorization`), arquivo de escopo JSON (`--scope-file`) e contexto da plataforma (`--platform hackerone|bugcrowd|intigriti`).
+- **Motores nativos** opcionais:
+  - `--subdomains`: enumeração passiva por Certificate Transparency e OSINT;
+  - `--probe`: probing HTTP e identificação de tecnologias;
+  - `--rules`: regras e matchers declarativos;
+  - `--crawl-native`: rotas REST, formulários e scripts;
+  - `--standalone-all`: tudo junto.
+- **Uso de ferramentas externas, se instaladas**: subfinder, httpx, katana, nuclei e aquatone são detectados com `shutil.which`; sem elas, a etapa é registrada como indisponível e a execução continua.
+- **Pipeline de agentes** (`--agents`) com fluxo evidence-first: detecção → evidência → validação da regra → PoC segura (cURL ou script) → análise → classificação → relatório. Cada achado traz o que foi comprovado, o que **não** foi e a avaliação de falso positivo.
+- **Relatórios** em Markdown, formato HackerOne, JSON, CSV ou HTML, além do pacote `reports/<alvo>/<data>.zip` com achados por CWE, evidências, screenshots, PoCs e logs.
+- **Narrativa opcional por IA local** (`--ai-narrative`, Ollama) sem alterar as evidências; upload opcional ao Google Drive.
+- Controles de ritmo: `--max-depth`, `--max-urls` e `--delay`.
 
----
+### Cyber Hunter Engine (`cyber_hunter.py`)
 
-## 📦 Pacote Completo de Evidências (`.zip`)
+17 motores em pipeline: rede e portas (CH-NET, CH-SPEEDNET), DNS, HTTP/TLS, crawling, auditoria web, descoberta de conteúdo, fuzzing, AppSec (sessões, JWT, CORS), detecção por regras, validação diferencial, correlação, CWE, OWASP, impacto (CVSS v3.1), evidências e relatório. Subcomandos `scan`, `agents`, `rules`, `doctor` e `version`.
 
-Ao finalizar cada execução, o **CWE-Cover 2.0** cria automaticamente uma estrutura de pastas organizada e compacta todos os artefatos gerados em um arquivo `.zip` único:
+### Painel web (`server.ts` + `src/`)
 
-```text
-reports/
-└── nome-do-alvo/
-    └── timestamp-da-execucao/
-        ├── bugcrowd_triage.md
-        ├── scan_agents.json
-        ├── findings/
-        │   ├── CWE-693/
-        │   │   ├── evidence/
-        │   │   │   └── raw_evidence.txt
-        │   │   ├── screenshots/
-        │   │   ├── poc/
-        │   │   │   ├── reproduce.sh
-        │   │   │   └── poc_details.txt
-        │   │   └── finding.md
-        │   └── CWE-200/
-        │       ├── evidence/
-        │       ├── screenshots/
-        │       ├── poc/
-        │       └── finding.md
-        ├── screenshots/
-        │   └── nome-do-alvo/
-        ├── evidence/
-        │   └── audited_urls.txt
-        ├── logs/
-        │   ├── execution.log
-        │   └── tools_status.txt
-        └── tools/
-            └── aquatone/
-```
+React 19 + Express com campanhas de varredura (criar, iniciar, pausar, retomar, exportar), ativação por licença, planos e pagamento por PIX, administração (licenças, usuários, sessões, auditoria) e diagnóstico do Ollama.
 
-### 🖥️ Saída Confirmada no Terminal
-```text
-[✓] Varredura finalizada
-[✓] Relatório Markdown: /caminho/absoluto/reports/target/2026-08-30_16-00-00/bugcrowd_triage.md
-[✓] Relatório dos agentes: /caminho/absoluto/reports/target/2026-08-30_16-00-00/scan_agents.json
-[✓] Screenshots: /caminho/absoluto/reports/target/2026-08-30_16-00-00/screenshots/
-[✓] Evidências: /caminho/absoluto/reports/target/2026-08-30_16-00-00/evidence/
-[✓] POCs: /caminho/absoluto/reports/target/2026-08-30_16-00-00/findings/
-[✓] Pacote completo criado
+## Instalação
 
-[✓] ZIP confirmado:
-    /caminho/absoluto/reports/target/2026-08-30_16-00-00.zip
-    Tamanho: 1.45 MB
-```
-
----
-
-## 🔍 Camada de Validação de Achados & PoC Explainer
-
-O fluxo segue a esteira:  
-**DETECÇÃO → ABRIR FINDING → COLETAR EVIDÊNCIA → VALIDAR A REGRA → GERAR POC/EVIDÊNCIA → AGENTES ANALISAM → CLASSIFICAR → RELATÓRIO FINAL**
-
-Cada achado auditado inclui:
-- **CWE & Classificação MITRE**
-- **URL & Parâmetro Afetado**
-- **Motivo da Detecção**
-- **Evidência Observada**
-- **PoC de Execução Segura (cURL / script de reprodução)**
-- **Análise Técnica dos Agentes**
-  - *O que foi comprovado empiricamente*
-  - *O que NÃO foi comprovado (sem suposições ou exploração invasiva)*
-  - *Avaliação de Falso Positivo e Contenção de Escopo*
-- **Impacto Real & Guia de Remediação**
-
----
-
-## ⚡ Exemplos de Execução (CLI)
+Requisitos: **Python 3.9+**; para o painel, **Node.js 20+**.
 
 ```bash
-# 1. Varredura completa com empacotamento automático de evidências
-python cwe_discover.py -u https://alvo-autorizado.example --i-have-authorization
-
-# 2. Varredura com contexto de plataforma Bug Bounty
-python cwe_discover.py -u https://alvo-autorizado.example --i-have-authorization --platform bugcrowd
-
-# 3. Varredura com arquivo de escopo JSON
-python cwe_discover.py -u https://alvo-autorizado.example --i-have-authorization --scope-file examples/scope_example.json
+git clone https://github.com/ticarollamas-arch/CWE-Cover-2.0.git
+cd CWE-Cover-2.0
+pip install -e .            # instala os comandos chl / cyber-hunter (sem dependências externas)
+npm install                 # opcional: painel web
+cp .env.example .env        # PORT, ADMIN_DEFAULT_EMAIL, ADMIN_DEFAULT_PASS, OLLAMA_ENDPOINT
 ```
 
----
+## Como usar
 
-## 🛡️ Licença & Autoria
+```bash
+# Varredura com pacote de evidências
+python cwe_discover.py -u https://alvo-autorizado.example --i-have-authorization
 
-Desenvolvido por **Carol Lamas** (CyberHuntLab).  
-- **Website:** https://cyberhuntlab.com.br/  
-- **Licença:** MIT License (https://opensource.org/licenses/MIT)
+# Com plataforma, escopo e agentes
+python cwe_discover.py -u https://alvo-autorizado.example --i-have-authorization \
+  --platform bugcrowd --scope-file examples/scope_example.json --agents --standalone-all
+
+# Cyber Hunter Engine
+python cyber_hunter.py scan https://alvo-autorizado.example --full --i-have-authorization -f md -o relatorio.md
+python cyber_hunter.py doctor
+
+# Testes
+python -m pytest -q
+
+# Painel web
+npm run dev
+```
+
+Guias complementares: [AI_SETUP.md](AI_SETUP.md) (Ollama e CrewAI), [GDRIVE_SETUP.md](GDRIVE_SETUP.md) e [INSTRUCOES_HOSPEDAGEM.md](INSTRUCOES_HOSPEDAGEM.md).
+
+## Uso responsável
+
+Use apenas em alvos próprios ou dentro do escopo de um programa de bug bounty. Os módulos de portas, fuzzing e AppSec fazem **testes ativos**: confira as regras do programa antes de ativá-los. Os achados são indicadores para triagem humana; a IA só redige a narrativa e não cria evidências.
+
+## Tecnologias
+
+Python · asyncio · pytest · MITRE CWE · OWASP Top 10 · CVSS v3.1 · Ollama · CrewAI · Google Drive API · React 19 · TypeScript · Vite · Tailwind CSS · Express
+
+## Licença
+
+Distribuído sob a licença MIT. Veja [LICENSE](LICENSE) (Copyright © 2026 Carol Lamas / CyberHuntLab).
